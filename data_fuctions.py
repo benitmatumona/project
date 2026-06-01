@@ -15,8 +15,7 @@ def gas_price(*countries: str)-> plt:
         except:
             print(f"invalid country name or format {country}")
         
-        
-    plt.title(
+        plt.title(
         "Gas Price Over Time", 
         fontdict={"fontsize": "20", "fontweight": "bold", }
         )
