@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from data_fuctions import set_title
+from oil_prices_functions import set_title
 
 
 fifa = pd.read_csv("data/fifa_data.csv")
