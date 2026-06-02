@@ -25,6 +25,18 @@ def fifa_hist()-> bool:
     return True
 
 
+def fifa_hist()-> bool:
+    bins = [40, 50, 60, 70, 80, 90, 100]
+    plt.hist(fifa.Overoll, bins= bins)
+    plt.xticks(bins)
+    plt.xlabel("Skill Level")
+    plt.ylabel("number of players")
+    set_title(
+        "Distribution Of Players According To Their Skills", plt
+        )
+    return True
+
+
 def preferred_foot_numbers(foot: str)-> int:
     return fifa.loc[fifa["Preferred Foot"] == foot].count()[0]
 
