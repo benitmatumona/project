@@ -1,35 +1,16 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from data_fuctions import set_title
 
 
-gas = pd.read_csv("data/gas_prices.csv")
-    
+fifa = pd.read_csv("data/fifa_data.csv")
 
-def gas_price(*countries: str)-> plt:
-    """creates a plot according to any contry/countries specified"""
-    for country in countries:
-        try:
-            plt.plot(gas.Year, gas[country], label=country)
-        except:
-            print(f"invalid country name or format {country}")
-        
-    plt.xlabel("Year")
-    plt.ylabel("Price(USD)")
-    plt.xticks(gas.Year[::3])
-    set_title("Gas Price Over Time", plt)
-    return plt
-    
 
-def save_plt(plt: plt, location: str)-> bool:
-    """
-    saves the file at a desired location according to the second argument
-    """
-    try:
-        plt.savefig(location, dpi=300)
-    except Exception as e:
-        print(f"Error: {e}")
-        return False
+def clean_fifa():
+    fifa.Weight = [
+        int(x.rstrip("lbs")) if type(x) == str else x for x in fifa.Weight
+        ]
 
 
 def fifa_hist()-> bool:
@@ -60,12 +41,6 @@ def preferred_foot_pie_chart()-> plt:
     return plt
 
 
-def set_title(title:str, plt: plt)-> None:
-    plt.title(title, 
-        fontdict={"fontsize": "20", "fontweight": "bold", }
-        )
-
-
 def weigth_pie_chat():
     light = fifa.loc[fifa.Weigth < 125].count()[0]
     light_medium = fifa.loc[fifa.Weigth >= 125 and fifa.Weigth < 150].count()[0]
@@ -81,3 +56,19 @@ def weigth_pie_chat():
     plt.pie(weigths, labels=labels, autopct="%.2f%%", 
             pctdistance=0.8, explode=explode)
     set_title("Weight Distribution Of Players in (lbs)", plt)
+
+
+def box_plot(*teams: str)-> plt:
+    """creates a plot according to any contry/countries specified"""
+    
+    Overolls = {}
+    for team in teams:
+        try:
+            Overolls[team] = fifa.loc[fifa[team] == team]["Overoll"]
+        except:
+            print(f"invalid country name or format {team}")
+    plt.boxplot(Overolls.values(), label=Overolls.keys())
+    plt.xlabel("Teams")
+    plt.ylabel("Fifa Overoll Rating")
+    set_title("Box Plot For Different teams", plt)
+    return plt
