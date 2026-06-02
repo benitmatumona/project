@@ -59,16 +59,23 @@ def weigth_pie_chat():
 
 
 def box_plot(*teams: str)-> plt:
-    """creates a plot according to any contry/countries specified"""
-    
+    """creates a plot according to any contry/countries specified"""   
     Overolls = {}
     for team in teams:
         try:
             Overolls[team] = fifa.loc[fifa[team] == team]["Overoll"]
         except:
             print(f"invalid country name or format {team}")
-    plt.boxplot(Overolls.values(), label=Overolls.keys())
+    
     plt.xlabel("Teams")
     plt.ylabel("Fifa Overoll Rating")
     set_title("Box Plot For Different teams", plt)
+    boxes = plt.boxplot(Overolls.values(), label=Overolls.keys())
+    change_colour(boxes)
     return plt
+
+
+def change_colour(boxplots: plt.boxplot)-> None:
+    for boxplot in boxplots:
+        boxplot.set(color="ab0133")
+        boxplot.set(facecolor="bd778899") 
